@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from . import models, database
-from .api import auth, garden
+from .api import auth, garden, schedule
 
 models.Base.metadata.create_all(bind=database.engine)
 
@@ -25,6 +25,7 @@ app.add_middleware(
 # Include the routers
 app.include_router(auth.router)
 app.include_router(garden.router)
+app.include_router(schedule.router)
 
 @app.get("/")
 def root():

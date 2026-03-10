@@ -1,35 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthProvider, AuthContext } from './context/AuthContext';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Schedule from './pages/Schedule';
+import PlantDoctor from './pages/PlantDoctor';
+import DailyTips from './pages/DailyTips';
 
-function App() {
-  const [count, setCount] = useState(0)
+// The Gatekeeper: Protects routes from unauthenticated users
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
+function AppRoutes() {
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex-grow">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+          
+          {/* Protected Routes */}
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/schedule" element={<ProtectedRoute><Schedule /></ProtectedRoute>} />
+          <Route path="/doctor" element={<ProtectedRoute><PlantDoctor /></ProtectedRoute>} />
+          <Route path="/tips" element={<ProtectedRoute><DailyTips /></ProtectedRoute>} />
+        </Routes>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRoutes />
+        <ToastContainer position="top-right" autoClose={3000} />
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
