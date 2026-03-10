@@ -38,13 +38,19 @@ class PlantCatalogResponse(BaseModel):
 class GardenAdd(BaseModel):
     plant_id: int
     nickname: str | None = None
+    location: str | None = None
+    notes: str | None = None
+    planted_date: datetime | None = None
 
 class GardenResponse(BaseModel):
     id: UUID
     plant_id: int
     nickname: str | None
+    location: str | None
+    notes: str | None
+    planted_date: datetime
     last_watered_date: datetime
-    plant_info: PlantCatalogResponse # Nested data to show plant details
+    plant_info: PlantCatalogResponse 
 
     class Config:
         from_attributes = True

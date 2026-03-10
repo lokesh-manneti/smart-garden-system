@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from .. import models, schemas, database
 from .deps import get_current_user
+from datetime import datetime, timezone
 
 router = APIRouter(
     prefix="/api/garden",
@@ -24,15 +25,19 @@ def get_my_garden(db: Session = Depends(database.get_db), current_user: models.U
 # 3. Add a plant to the garden (Protected Route)
 @router.post("/add", response_model=schemas.GardenResponse, status_code=status.HTTP_201_CREATED)
 def add_to_garden(item: schemas.GardenAdd, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
-    # Verify the plant exists in the catalog
     plant = db.query(models.PlantCatalog).filter(models.PlantCatalog.id == item.plant_id).first()
     if not plant:
         raise HTTPException(status_code=404, detail="Plant not found in catalog")
 
+    # Pass the new fields into the database model
     new_garden_entry = models.UserGarden(
         user_id=current_user.id,
         plant_id=item.plant_id,
-        nickname=item.nickname
+        nickname=item.nickname,
+        location=item.location,
+        notes=item.notes,
+        # If the user provides a date, use it. Otherwise, let the DB default to now.
+        planted_date=item.planted_date 
     )
     db.add(new_garden_entry)
     db.commit()
@@ -53,3 +58,22 @@ def remove_from_garden(garden_id: str, db: Session = Depends(database.get_db), c
     db.delete(garden_entry)
     db.commit()
     return None
+
+# 5. Water a plant (Update last_watered_date)
+@router.put("/{garden_id}/water", response_model=schemas.GardenResponse)
+def water_plant(garden_id: str, db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
+    # Find the specific plant in the user's garden
+    garden_entry = db.query(models.UserGarden).filter(
+        models.UserGarden.id == garden_id, 
+        models.UserGarden.user_id == current_user.id
+    ).first()
+    
+    if not garden_entry:
+        raise HTTPException(status_code=404, detail="Plant not found in your garden")
+        
+    # Update the timestamp to right now
+    garden_entry.last_watered_date = datetime.now(timezone.utc)
+    
+    db.commit()
+    db.refresh(garden_entry)
+    return garden_entry

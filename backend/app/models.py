@@ -32,8 +32,14 @@ class UserGarden(Base):
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
     plant_id = Column(Integer, ForeignKey("plant_catalog.id"), nullable=False)
     nickname = Column(String, nullable=True)
+    
+    # --- NEW COLUMNS ---
+    location = Column(String, nullable=True)
+    notes = Column(String, nullable=True)
+    planted_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    # -------------------
+
     last_watered_date = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-    # Relationships
     owner = relationship("User", back_populates="garden_plants")
     plant_info = relationship("PlantCatalog")
