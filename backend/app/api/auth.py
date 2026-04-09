@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from fastapi.security import OAuth2PasswordRequestForm
 from .. import models, schemas, database
 from ..core import security
+from . import deps
 
 router = APIRouter(
     prefix="/api/auth",
@@ -23,7 +24,13 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(database.get_d
     hashed_pwd = security.hash_password(user.password)
 
     # 3. Save to database
-    new_user = models.User(email=user.email, password_hash=hashed_pwd)
+    new_user = models.User(
+        email=user.email,
+        password_hash=hashed_pwd,
+        first_name=user.first_name,
+        last_name=user.last_name,
+        marketing_consent=user.marketing_consent
+    )
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
@@ -50,3 +57,26 @@ def login_user(
     access_token = security.create_access_token(data={"user_id": str(user.id)})
 
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.put("/settings", response_model=schemas.UserResponse)
+def update_settings(
+    settings: schemas.UserUpdate, 
+    db: Session = Depends(database.get_db), 
+    current_user: models.User = Depends(deps.get_current_user)
+):
+    if settings.first_name is not None:
+        current_user.first_name = settings.first_name
+    if settings.last_name is not None:
+        current_user.last_name = settings.last_name
+    if settings.marketing_consent is not None:
+        current_user.marketing_consent = settings.marketing_consent
+    if settings.notification_time is not None:
+        current_user.notification_time = settings.notification_time
+
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
+@router.get("/me", response_model=schemas.UserResponse)
+def get_me(current_user: models.User = Depends(deps.get_current_user)):
+    return current_user

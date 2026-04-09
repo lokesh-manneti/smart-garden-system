@@ -35,9 +35,15 @@ export const AuthProvider = ({ children }) => {
     return response.data;
   };
 
-  const register = async (email, password) => {
+  const register = async (email, password, firstName, lastName, marketingConsent) => {
     // Registration accepts standard JSON
-    const response = await api.post('/auth/register', { email, password });
+    const response = await api.post('/auth/register', { 
+      email, 
+      password,
+      first_name: firstName,
+      last_name: lastName,
+      marketing_consent: marketingConsent
+    });
     return response.data;
   };
 

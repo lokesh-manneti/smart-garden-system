@@ -16,7 +16,7 @@ def get_smart_schedule(db: Session = Depends(database.get_db), current_user: mod
     garden_plants = db.query(models.UserGarden).filter(models.UserGarden.user_id == current_user.id).all()
     
     # 2. Fetch current weather (Uses environment default)
-    city = os.getenv("DEFAULT_CITY", "Bengaluru")
+    city = "Bengaluru"
     current_weather = weather.get_weather(city)
     
     # 3. Process each plant through the algorithm
