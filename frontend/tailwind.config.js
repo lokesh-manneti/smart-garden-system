@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
       },
       colors: {
         garden: {
@@ -47,18 +47,37 @@ export default {
           800: '#115e59',
           900: '#134e4a',
         },
+        // Botanical Glass design system tokens
+        botanical: {
+          surface:     '#f9f9f9',
+          'surface-low': '#f3f3f3',
+          'surface-high': '#e8e8e8',
+          'surface-card': '#ffffff',
+          primary:     '#003526',
+          'primary-container': '#004e39',
+          secondary:   '#316763',
+          'on-surface': '#1a1c1c',
+          outline:     '#707974',
+          'outline-light': '#bfc9c3',
+        },
       },
       boxShadow: {
-        'soft':  '0 2px 15px -3px rgba(0,0,0,0.04), 0 10px 20px -2px rgba(0,0,0,0.02)',
-        'card':  '0 4px 25px -5px rgba(0,0,0,0.06)',
-        'glow':  '0 8px 30px rgb(0,0,0,0.04)',
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.08)',
+        'soft':    '0 2px 15px -3px rgba(0,0,0,0.04), 0 10px 20px -2px rgba(0,0,0,0.02)',
+        'card':    '0 4px 25px -5px rgba(0,0,0,0.06)',
+        'glow':    '0 8px 30px rgb(0,0,0,0.04)',
+        'glass':   '0 8px 32px 0 rgba(31, 38, 135, 0.08)',
+        'ambient': '0 8px 30px rgba(0,0,0,0.04)',
+      },
+      borderRadius: {
+        '4xl': '2rem',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'fade-in-up': 'fadeInUp 0.5s ease-out',
-        'slide-up': 'slideUp 0.4s ease-out',
-        'pulse-soft': 'pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'fade-in':     'fadeIn 0.5s ease-out',
+        'fade-in-up':  'fadeInUp 0.6s ease-out both',
+        'slide-up':    'slideUp 0.4s ease-out',
+        'pulse-soft':  'pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float':       'float 6s ease-in-out infinite',
+        'shimmer':     'shimmer 2s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -76,6 +95,14 @@ export default {
         pulseSoft: {
           '0%, 100%': { opacity: 1 },
           '50%':      { opacity: 0.7 },
+        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%':      { transform: 'translateY(-10px)' },
+        },
+        shimmer: {
+          '0%':   { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' },
         },
       },
       backdropBlur: {

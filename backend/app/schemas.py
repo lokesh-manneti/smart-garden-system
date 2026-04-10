@@ -30,6 +30,7 @@ class UserUpdate(BaseModel):
     last_name: str | None = None
     notification_time: time | None = None
     marketing_consent: bool | None = None
+    city: str | None = None
 
 # --- Outgoing Response Schemas ---
 class UserResponse(BaseModel):
@@ -39,6 +40,7 @@ class UserResponse(BaseModel):
     last_name: str | None
     marketing_consent: bool
     notification_time: time | None
+    city: str | None
     created_at: datetime
 
     class Config:

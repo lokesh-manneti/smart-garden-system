@@ -15,6 +15,7 @@ class User(Base):
     last_name = Column(String, nullable=True)
     marketing_consent = Column(Boolean, default=True)
     notification_time = Column(Time, default=time(8, 0))
+    city = Column(String, nullable=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
     # Relationship to the garden

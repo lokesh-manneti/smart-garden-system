@@ -72,6 +72,8 @@ def update_settings(
         current_user.marketing_consent = settings.marketing_consent
     if settings.notification_time is not None:
         current_user.notification_time = settings.notification_time
+    if settings.city is not None:
+        current_user.city = settings.city
 
     db.commit()
     db.refresh(current_user)

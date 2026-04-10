@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,19 +6,15 @@
 
 @layer base {
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply text-gray-900;
-    background-color: #f7f9f7; /* Fallback */
-    /* background-image: url('/intricate-green-leaf-outline-vector-59790105.png'); */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: #f9f9f9;
+    scroll-behavior: smooth;
   }
 
   /* Smooth scrolling */
@@ -28,18 +24,33 @@
 }
 
 @layer components {
+
+  /* ── Botanical Glass Surfaces ── */
+  .surface-floor {
+    background-color: #f9f9f9;
+  }
+  .surface-section {
+    background-color: #f3f3f3;
+  }
+  .surface-card {
+    background-color: #ffffff;
+  }
+
   /* Glass morphism surfaces */
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/40;
+    @apply backdrop-blur-md;
+    background: rgba(255, 255, 255, 0.70);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.04);
   }
 
   .glass-dark {
     @apply bg-gray-900/80 backdrop-blur-md border border-gray-700/40;
   }
 
-  /* Premium card styles */
+  /* ── Premium Card ── */
   .card-premium {
-    @apply bg-white rounded-2xl border border-gray-100/80 transition-all duration-300 ease-out;
+    @apply rounded-4xl transition-all duration-300 ease-out;
+    background-color: #ffffff;
     box-shadow: 0 4px 25px -5px rgba(0,0,0,0.06);
   }
 
@@ -48,7 +59,12 @@
     transform: translateY(-2px);
   }
 
-  /* Status badges */
+  /* Ghost border — ultra-subtle separation */
+  .ghost-border {
+    border: 1px solid rgba(191, 201, 195, 0.15);
+  }
+
+  /* ── Status Badges ── */
   .badge {
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
   }
@@ -73,36 +89,57 @@
     @apply badge bg-gray-100 text-gray-600 border border-gray-200/60;
   }
 
-  /* Form inputs */
+  /* ── Form Inputs ── */
   .input-premium {
-    @apply w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl 
-           focus:ring-2 focus:ring-garden-500/20 focus:border-garden-500 
-           outline-none transition-all duration-200 text-gray-900 
+    @apply w-full px-4 py-3 rounded-2xl
+           outline-none transition-all duration-200 text-gray-900
            placeholder:text-gray-400;
+    background-color: #e8e8e8;
+  }
+  .input-premium:focus {
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(0, 53, 38, 0.12);
   }
 
-  /* Premium buttons */
+  /* ── Premium Buttons ── */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 
-           bg-gradient-to-r from-garden-600 to-garden-700 
-           text-white font-semibold rounded-xl 
-           hover:from-garden-700 hover:to-garden-800 
-           transition-all duration-200 shadow-sm hover:shadow-md 
+    @apply inline-flex items-center justify-center px-6 py-3
+           text-white font-semibold rounded-full
+           transition-all duration-200 shadow-sm hover:shadow-lg
            active:scale-[0.98];
+    background: linear-gradient(135deg, #003526, #004e39);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #004e39, #065f46);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 
-           bg-white text-gray-700 font-medium rounded-xl 
-           border border-gray-200 hover:bg-gray-50 
+    @apply inline-flex items-center justify-center px-6 py-3
+           text-gray-700 font-medium rounded-full
            transition-all duration-200;
+    background-color: #e2e2e2;
+  }
+  .btn-secondary:hover {
+    background-color: #dadada;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center px-4 py-2 
-           text-gray-500 font-medium rounded-xl 
-           hover:bg-gray-100 hover:text-gray-700 
+    @apply inline-flex items-center justify-center px-4 py-2
+           text-gray-500 font-medium rounded-full
+           hover:bg-gray-100 hover:text-gray-700
            transition-all duration-200;
+  }
+
+  /* ── Botanical Gradient ── */
+  .botanical-gradient {
+    background: linear-gradient(135deg, #003526, #004e39);
+  }
+
+  .botanical-gradient-text {
+    background: linear-gradient(135deg, #003526, #004e39, #065f46);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -120,5 +157,10 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
+  }
+
+  /* Letter spacing for editorial headlines */
+  .tracking-editorial {
+    letter-spacing: -0.04em;
   }
 }
