@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Leaf, Droplets, Activity, Sparkles, Scan, CalendarClock, BookOpen, UserPlus, Camera, Zap } from 'lucide-react';
+import PlantImage from '../components/dashboard/PlantImage';
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80';
 
 export default function Home() {
   return (
-    <div className="min-h-screen surface-floor">
+    <div className="min-h-screen">
 
       {/* ═══ HERO SECTION ═══ */}
       <section className="relative overflow-hidden">
@@ -47,10 +48,10 @@ export default function Home() {
 
             {/* Right — App Preview Card */}
             <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <div className="card-premium overflow-hidden ghost-border">
+              <div className="card-botanical overflow-hidden">
                 {/* Preview image — full bleed */}
                 <div className="relative h-64 overflow-hidden">
-                  <img
+                  <PlantImage
                     src={HERO_IMAGE}
                     alt="Lush garden plants"
                     className="w-full h-full object-cover"
@@ -67,7 +68,7 @@ export default function Home() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="surface-section rounded-2xl p-4 text-center">
+                    <div className="glass-stat rounded-2xl p-4 text-center">
                       <p className="text-xs text-gray-400 mb-1">Diagnosis</p>
                       <p className="text-sm font-bold text-botanical-primary">Ficus Lyrata: 98% Healthy</p>
                     </div>
@@ -87,7 +88,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FEATURES SECTION ═══ */}
-      <section id="features" className="py-28 surface-section">
+      <section id="features" className="py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="text-center mb-20 animate-fade-in">
@@ -123,16 +124,15 @@ export default function Home() {
             ].map((feature, i) => (
               <div
                 key={feature.title}
-                className="card-premium overflow-hidden group animate-fade-in-up"
+                className="card-botanical overflow-hidden group animate-fade-in-up"
                 style={{ animationDelay: `${i * 0.1}s` }}
               >
                 {/* Full-bleed image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img
+                  <PlantImage
                     src={feature.image}
                     alt={feature.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-4">
@@ -153,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* ═══ THREE STEPS SECTION ═══ */}
-      <section className="py-28 surface-floor">
+      <section className="py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="text-center mb-20 animate-fade-in">
@@ -178,7 +178,7 @@ export default function Home() {
                 icon: Camera,
                 step: '02',
                 title: 'Add Your Collection',
-                description: 'Snap a photo or search our database of 75+ Indian species. Our AI identifies your plants instantly and maps their specific biological needs.',
+                description: 'Snap a photo or search our database of 25+ curated species. Our AI identifies your plants instantly and maps their specific biological needs.',
               },
               {
                 icon: Zap,
@@ -211,7 +211,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CTA FOOTER SECTION ═══ */}
-      <section className="py-28 surface-section">
+      <section className="py-28">
         <div className="max-w-3xl mx-auto px-4 text-center animate-fade-in">
           <h2 className="text-4xl lg:text-5xl font-bold text-botanical-primary tracking-editorial mb-6">
             Ready to grow?
@@ -229,7 +229,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="surface-floor py-10 ghost-border border-l-0 border-r-0 border-b-0">
+      <footer className="py-10 ghost-border border-l-0 border-r-0 border-b-0">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-2">

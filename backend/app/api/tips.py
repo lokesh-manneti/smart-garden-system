@@ -57,7 +57,7 @@ GENERAL_GARDENING_TIPS = [
     "Mist humidity-loving plants regularly, or place them on a pebble tray filled with water.",
     "Use crushed eggshells around the base of plants to deter slugs and snails.",
     "Start herbs in your kitchen window for fresh ingredients right at your fingertips.",
-    "If your plant is stretching towards the light, it means it’s not getting enough of it.",
+    "If your plant is stretching towards the light, it means it's not getting enough of it.",
     "Save seeds from your best producing plants for next year.",
     "Ensure good air circulation around plants to combat mildew and mold.",
     "Watering in the late afternoon is the second best time, after early morning.",
@@ -72,10 +72,19 @@ GENERAL_GARDENING_TIPS = [
     "Learn to identify beneficial insects like ladybugs, lacewings, and parasitic wasps."
 ]
 
+# Default fallback city when user has no city in profile
+DEFAULT_CITY = "Bengaluru"
+
 router = APIRouter(
     prefix="/api/tips",
     tags=["Daily Tips"]
 )
+
+def _resolve_user_city(current_user) -> str:
+    """Resolve the user's city from their profile, falling back to DEFAULT_CITY."""
+    if hasattr(current_user, 'city') and current_user.city:
+        return current_user.city.strip()
+    return DEFAULT_CITY
 
 @router.get("/")
 async def get_daily_tips(
@@ -118,19 +127,30 @@ async def get_daily_tips(
             if gp.location:
                 locations.add(gp.location)
         
-        # We MUST strictly use "Bengaluru" entirely bypassing user location column
-        target_location = "Bengaluru"
+        # Dynamic location: use user's profile city, fallback to DEFAULT_CITY
+        target_location = _resolve_user_city(current_user)
         weather_data = None
         try:
             weather_data = get_weather(target_location)
         except Exception:
             weather_data = "Weather data unavailable"
-            
-        prompt = (f"I have a smart garden. The weather in my area ({target_location}) is currently: {weather_data}. "
-                  f"My garden contains the following plants: {json.dumps(garden_data)}. "
-                  "Please provide 3 personalized daily gardening tips based on this weather and my specific plants. "
-                  "Return a JSON array of objects, where each object has 'category' (e.g. Watering, Sunlight, Pruning), "
-                  "'tip' (the advice), and 'plant_focus' (which plant it applies to, or 'General').")
+
+        # Build a rich, context-aware prompt for hyper-personalized tips
+        location_context = f"The user is located in {target_location}."
+        weather_context = f"Current weather conditions: {json.dumps(weather_data) if isinstance(weather_data, dict) else weather_data}."
+        garden_context = f"Their garden contains: {json.dumps(garden_data)}."
+
+        prompt = (
+            "You are a senior horticulturalist and plant care advisor. "
+            f"{location_context} {weather_context} {garden_context} "
+            "Provide exactly 3 hyper-personalized daily gardening tips. "
+            "Each tip MUST reference the user's specific weather conditions and at least one of their actual plants by nickname. "
+            "Tips should be immediately actionable today. "
+            "Return a JSON array of objects with keys: "
+            "'category' (one of: Watering, Sunlight, Pruning, Pest Control, Nutrition, Climate Adaptation), "
+            "'tip' (2-3 sentences of expert advice referencing their plant and conditions), "
+            "'plant_focus' (the specific plant nickname or 'All Plants')."
+        )
 
         if not client:
             raise HTTPException(status_code=500, detail="Gemini Client is not configured.")

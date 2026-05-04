@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { toast } from 'react-toastify';
 import { Droplets, CloudSun, CheckCircle2, AlertCircle, Clock, Leaf, ThermometerSun, Wind, CalendarDays } from 'lucide-react';
+import PlantImage from '../components/dashboard/PlantImage';
 
 /* Unsplash fallbacks for schedule plant thumbnails */
 const SCHEDULE_FALLBACKS = [
@@ -61,7 +62,7 @@ export default function Schedule() {
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* ═══ TOP HEADER CARD ═══ */}
-                <div className="card-premium ghost-border overflow-hidden mb-10 animate-fade-in">
+                <div className="card-botanical ghost-border overflow-hidden mb-10 animate-fade-in">
                     {/* Header gradient bar */}
                     <div className="h-1.5 botanical-gradient" />
 
@@ -80,7 +81,7 @@ export default function Schedule() {
                             </div>
 
                             {/* Weather Widget */}
-                            <div className="flex items-center gap-4 bg-gradient-to-br from-sky-50 via-blue-50 to-teal-50 px-6 py-5 rounded-4xl ghost-border min-w-[280px]">
+                            <div className="flex items-center gap-4 bg-gradient-to-br from-sky-50/80 via-blue-50/80 to-teal-50/80 px-6 py-5 rounded-4xl ghost-border glass-stat min-w-[280px]">
                                 <div className="bg-blue-100 p-3 rounded-2xl flex-shrink-0">
                                     <CloudSun className="w-6 h-6 text-blue-500" />
                                 </div>
@@ -120,7 +121,7 @@ export default function Schedule() {
                     </div>
 
                     {overdueOrToday.length === 0 ? (
-                        <div className="card-premium p-12 text-center ghost-border">
+                        <div className="card-botanical p-12 text-center ghost-border">
                             <div className="bg-green-50 w-16 h-16 rounded-4xl flex items-center justify-center mx-auto mb-4">
                                 <CheckCircle2 className="w-8 h-8 text-green-500" />
                             </div>
@@ -132,7 +133,7 @@ export default function Schedule() {
                             {overdueOrToday.map((task, i) => (
                                 <div
                                     key={task.garden_id}
-                                    className="card-premium overflow-hidden flex items-stretch animate-fade-in-up ghost-border"
+                                    className="card-botanical overflow-hidden flex items-stretch animate-fade-in-up ghost-border"
                                     style={{ animationDelay: `${i * 0.05}s` }}
                                 >
                                     {/* Left accent bar */}
@@ -140,11 +141,10 @@ export default function Schedule() {
 
                                     {/* Plant thumbnail */}
                                     <div className="w-20 h-20 flex-shrink-0 self-center ml-4 my-3">
-                                        <img
+                                        <PlantImage
                                             src={SCHEDULE_FALLBACKS[i % SCHEDULE_FALLBACKS.length]}
                                             alt={task.nickname}
                                             className="w-full h-full object-cover rounded-2xl"
-                                            loading="lazy"
                                         />
                                     </div>
 
@@ -195,7 +195,7 @@ export default function Schedule() {
                             {upcoming.map((task, i) => (
                                 <div
                                     key={task.garden_id}
-                                    className="card-premium overflow-hidden flex items-stretch animate-fade-in-up ghost-border"
+                                    className="card-botanical overflow-hidden flex items-stretch animate-fade-in-up ghost-border"
                                     style={{ animationDelay: `${0.15 + i * 0.04}s` }}
                                 >
                                     {/* Left accent bar — green for upcoming */}
@@ -203,11 +203,10 @@ export default function Schedule() {
 
                                     {/* Plant thumbnail */}
                                     <div className="w-14 h-14 flex-shrink-0 self-center ml-4 my-3">
-                                        <img
+                                        <PlantImage
                                             src={SCHEDULE_FALLBACKS[i % SCHEDULE_FALLBACKS.length]}
                                             alt={task.nickname}
                                             className="w-full h-full object-cover rounded-xl"
-                                            loading="lazy"
                                         />
                                     </div>
 
@@ -232,7 +231,7 @@ export default function Schedule() {
                 </div>
 
                 {/* ═══ CLIMATE ALERT ═══ */}
-                <div className="card-premium ghost-border overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+                <div className="card-botanical ghost-border overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                     <div className="flex items-stretch">
                         <div className="w-1.5 bg-gradient-to-b from-amber-400 to-orange-400 flex-shrink-0" />
                         <div className="p-6 flex items-start gap-4">

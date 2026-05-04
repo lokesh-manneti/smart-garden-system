@@ -10,13 +10,22 @@ router = APIRouter(
     tags=["Smart Schedule"]
 )
 
+# Default fallback city when user has no city in profile
+DEFAULT_CITY = "Bengaluru"
+
+def _resolve_user_city(current_user) -> str:
+    """Resolve the user's city from their profile, falling back to DEFAULT_CITY."""
+    if hasattr(current_user, 'city') and current_user.city:
+        return current_user.city.strip()
+    return DEFAULT_CITY
+
 @router.get("/")
 def get_smart_schedule(db: Session = Depends(database.get_db), current_user: models.User = Depends(get_current_user)):
     # 1. Fetch user's garden
     garden_plants = db.query(models.UserGarden).filter(models.UserGarden.user_id == current_user.id).all()
     
-    # 2. Fetch current weather (Uses environment default)
-    city = "Bengaluru"
+    # 2. Dynamic location: use user's profile city, fallback to DEFAULT_CITY
+    city = _resolve_user_city(current_user)
     current_weather = weather.get_weather(city)
     
     # 3. Process each plant through the algorithm

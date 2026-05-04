@@ -13,8 +13,14 @@
 
   body {
     @apply text-gray-900;
-    background-color: #f9f9f9;
+    /* Botanical Glass radial gradient background */
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(16, 185, 129, 0.06), transparent 50%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(20, 184, 166, 0.05), transparent 50%),
+      radial-gradient(ellipse 50% 40% at 50% 0%, rgba(6, 78, 59, 0.03), transparent 40%),
+      #f8faf9;
     scroll-behavior: smooth;
+    min-height: 100vh;
   }
 
   /* Smooth scrolling */
@@ -27,13 +33,20 @@
 
   /* ── Botanical Glass Surfaces ── */
   .surface-floor {
-    background-color: #f9f9f9;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(16, 185, 129, 0.06), transparent 50%),
+      radial-gradient(ellipse 60% 50% at 90% 80%, rgba(20, 184, 166, 0.05), transparent 50%),
+      #f8faf9;
   }
+
   .surface-section {
-    background-color: #f3f3f3;
+    background-color: rgba(243, 243, 243, 0.7);
+    backdrop-filter: blur(8px);
   }
+
   .surface-card {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
   }
 
   /* Glass morphism surfaces */
@@ -47,7 +60,18 @@
     @apply bg-gray-900/80 backdrop-blur-md border border-gray-700/40;
   }
 
-  /* ── Premium Card ── */
+  /* Glassmorphic stat card — subtle frosted glass */
+  .glass-stat {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  /* ── Premium Card — Botanical Glass ── */
   .card-premium {
     @apply rounded-4xl transition-all duration-300 ease-out;
     background-color: #ffffff;
@@ -57,6 +81,26 @@
   .card-premium:hover {
     box-shadow: 0 20px 40px -12px rgba(0,0,0,0.1);
     transform: translateY(-2px);
+  }
+
+  /* Botanical Glass Card — elevated glass with green tint */
+  .card-botanical {
+    @apply rounded-4xl transition-all duration-300 ease-out;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(191, 201, 195, 0.18);
+    box-shadow:
+      0 8px 30px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .card-botanical:hover {
+    box-shadow:
+      0 20px 50px -12px rgba(0, 53, 38, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transform: translateY(-3px);
+    border-color: rgba(16, 185, 129, 0.15);
   }
 
   /* Ghost border — ultra-subtle separation */
@@ -94,10 +138,11 @@
     @apply w-full px-4 py-3 rounded-2xl
            outline-none transition-all duration-200 text-gray-900
            placeholder:text-gray-400;
-    background-color: #e8e8e8;
+    background-color: rgba(232, 232, 232, 0.6);
+    backdrop-filter: blur(6px);
   }
   .input-premium:focus {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 0 2px rgba(0, 53, 38, 0.12);
   }
 
@@ -105,22 +150,25 @@
   .btn-primary {
     @apply inline-flex items-center justify-center px-6 py-3
            text-white font-semibold rounded-full
-           transition-all duration-200 shadow-sm hover:shadow-lg
+           transition-all duration-300 shadow-sm hover:shadow-lg
            active:scale-[0.98];
     background: linear-gradient(135deg, #003526, #004e39);
   }
   .btn-primary:hover {
     background: linear-gradient(135deg, #004e39, #065f46);
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center px-6 py-3
            text-gray-700 font-medium rounded-full
-           transition-all duration-200;
-    background-color: #e2e2e2;
+           transition-all duration-300;
+    background-color: rgba(226, 226, 226, 0.6);
+    backdrop-filter: blur(8px);
   }
   .btn-secondary:hover {
-    background-color: #dadada;
+    background-color: rgba(218, 218, 218, 0.8);
+    transform: translateY(-1px);
   }
 
   .btn-ghost {

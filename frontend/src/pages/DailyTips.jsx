@@ -63,7 +63,7 @@ export default function DailyTips() {
               </div>
 
               {data.ai_tips?.length === 0 ? (
-                <div className="card-premium p-12 text-center max-w-md mx-auto ghost-border">
+                <div className="card-botanical p-12 text-center max-w-md mx-auto ghost-border">
                   <div className="surface-section w-16 h-16 rounded-4xl flex items-center justify-center mx-auto mb-4">
                     <Leaf className="w-8 h-8 text-garden-200" />
                   </div>
@@ -77,7 +77,7 @@ export default function DailyTips() {
                     return (
                       <div
                         key={`ai-${idx}`}
-                        className="card-premium overflow-hidden animate-fade-in-up ghost-border"
+                        className="card-botanical overflow-hidden animate-fade-in-up ghost-border"
                         style={{ animationDelay: `${idx * 0.08}s` }}
                       >
                         {/* Top gradient accent bar */}
@@ -120,7 +120,7 @@ export default function DailyTips() {
                   {data.general_tips.map((t, idx) => (
                     <div
                       key={`general-${idx}`}
-                      className="card-premium p-6 animate-fade-in-up ghost-border bg-gradient-to-br from-white to-gray-50/50"
+                      className="card-botanical p-6 animate-fade-in-up ghost-border bg-gradient-to-br from-white/80 to-gray-50/50"
                       style={{ animationDelay: `${(idx + data.ai_tips.length) * 0.08}s` }}
                     >
                       <Quote className="w-6 h-6 text-gray-200 mb-3" />

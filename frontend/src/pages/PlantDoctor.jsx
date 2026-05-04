@@ -92,7 +92,7 @@ export default function PlantDoctor() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
         {/* Input Form */}
-        <div className="card-premium p-6 animate-fade-in-up ghost-border">
+        <div className="card-botanical p-6 animate-fade-in-up ghost-border">
           <form onSubmit={handleDiagnose} className="space-y-5">
 
             {/* Plant selector */}
@@ -165,14 +165,14 @@ export default function PlantDoctor() {
 
         {/* Results Panel */}
         {result ? (
-          <div className="card-premium p-6 animate-slide-up ghost-border">
+          <div className="card-botanical p-6 animate-slide-up ghost-border">
             <h3 className="text-lg font-bold text-botanical-primary mb-5 flex items-center gap-2">
               <Shield className="w-5 h-5 text-garden-500" /> Diagnosis Results
             </h3>
 
             <div className="space-y-4">
               {/* Diagnosis */}
-              <div className="bg-red-50/60 ghost-border p-5 rounded-4xl">
+              <div className="bg-red-50/60 ghost-border p-5 rounded-4xl glass-stat">
                 <h4 className="text-sm font-bold text-red-700 flex items-center gap-2 mb-2">
                   <AlertCircle className="w-4 h-4" /> Suspected Issue
                 </h4>
@@ -180,7 +180,7 @@ export default function PlantDoctor() {
               </div>
 
               {/* Treatment */}
-              <div className="bg-blue-50/60 ghost-border p-5 rounded-4xl">
+              <div className="bg-blue-50/60 ghost-border p-5 rounded-4xl glass-stat">
                 <h4 className="text-sm font-bold text-blue-700 mb-2">Recommended Treatment</h4>
                 <p className="text-blue-600 text-sm whitespace-pre-wrap leading-relaxed">{result.treatment}</p>
               </div>
@@ -203,7 +203,7 @@ export default function PlantDoctor() {
             </div>
           </div>
         ) : (
-          <div className="card-premium p-10 flex flex-col items-center justify-center text-center animate-fade-in ghost-border">
+          <div className="card-botanical p-10 flex flex-col items-center justify-center text-center animate-fade-in ghost-border">
             <div className="surface-section w-16 h-16 rounded-4xl flex items-center justify-center mb-4">
               <Leaf className="w-8 h-8 text-garden-200" />
             </div>
@@ -227,7 +227,7 @@ export default function PlantDoctor() {
             {history.map((record, i) => (
               <div
                 key={record.id}
-                className="card-premium p-5 animate-fade-in-up ghost-border"
+                className="card-botanical p-5 animate-fade-in-up ghost-border"
                 style={{ animationDelay: `${0.2 + i * 0.05}s` }}
               >
                 <div className="flex justify-between items-center mb-3">

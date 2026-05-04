@@ -52,16 +52,18 @@ async def diagnose_plant(
         if not image_bytes:
             raise HTTPException(status_code=400, detail="Uploaded image file was empty.")
         
-        # Build context-aware prompt
-        plant_context = f" The plant is a {plant_name}." if plant_name else ""
+        # Build context-aware prompt with rich diagnostic structure
+        plant_context = f" The plant species is {plant_name}." if plant_name else ""
         prompt = (
-            f"You are an expert plant pathologist.{plant_context} "
-            f"The user describes these symptoms: {symptoms}. "
-            "Analyze the provided image and diagnose the plant's issue. "
-            "Respond as a JSON object with exactly these keys: "
-            "'diagnosis' (string, the identified problem), "
-            "'treatment' (string, actionable steps to fix it), "
-            "'confidence' (float between 0.0 and 1.0)."
+            "You are a senior plant pathologist with 20 years of clinical experience. "
+            f"A user has submitted a photo of their plant for diagnosis.{plant_context} "
+            f"Observed symptoms: \"{symptoms}\". "
+            "Carefully analyze the image alongside the described symptoms. "
+            "Provide a thorough, professional diagnosis. "
+            "Respond as a JSON object with EXACTLY these keys: "
+            "'diagnosis' (string: a clear, specific identification of the condition — e.g. 'Powdery Mildew' not just 'fungal infection'), "
+            "'treatment' (string: 3-5 numbered actionable steps the user should take immediately, written conversationally), "
+            "'confidence' (float between 0.0 and 1.0: your diagnostic confidence based on image clarity and symptom match)."
         )
         
         if not client:
